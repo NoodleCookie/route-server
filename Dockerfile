@@ -1,0 +1,13 @@
+FROM centos:7
+WORKDIR /app
+
+ARG CONFIG_PATH=/data/config.toml
+ARG PORT=8080
+
+COPY server .
+
+EXPOSE ${PORT}
+ENV CONFIG_PATH=${CONFIG_PATH}
+ENV PORT=${PORT}
+
+ENTRYPOINT [ "./server" ]

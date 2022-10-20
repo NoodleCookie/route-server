@@ -1,0 +1,12 @@
+[[route]]
+host = "https://www.baidu.com"
+# path = "/"
+code = 200
+# body = "html"
+
+[[route]]
+host = "http://bilibili.com"
+# path = "/test"
+code = 403
+# body = "htmls"
+headers = ["Content-Type: text/html"]
