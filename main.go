@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/gin-gonic/gin"
@@ -34,6 +35,7 @@ type Config struct{
 		Code int
 		Headers []string
 		Body string
+		Timeout int
 	}
 }
 
@@ -52,6 +54,11 @@ func handle(context *gin.Context) {
 
 	for _, route := range config.Route {
 		client := http.DefaultClient
+		if route.Timeout != 0 {
+			client.Timeout = time.Duration(route.Timeout) * time.Second
+		}else {
+			client.Timeout = 10 * time.Second
+		}
 	    dest := fmt.Sprintf("%s%s", route.Host, route.Path)
 		resp, err := client.Get(dest)
 		if err != nil {
