@@ -1,8 +1,10 @@
 [[route]]
 host = "https://www.baidu.com"
 # path = "/"
-code = 200
+code = 202
 # body = "html"
+payload='{"yes"}'
+headers=["Content-Type: application/json"]
 
 [[route]]
 host = "http://bilibili.com"

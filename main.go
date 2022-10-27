@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -32,8 +33,10 @@ type Config struct{
 	Route []*struct{
 		Host string
 		Path string
-		Code int
+		Payload string
 		Headers []string
+		Method string
+		Code int
 		Body string
 		Timeout int
 	}
@@ -60,7 +63,17 @@ func handle(context *gin.Context) {
 			client.Timeout = 10 * time.Second
 		}
 	    dest := fmt.Sprintf("%s%s", route.Host, route.Path)
-		resp, err := client.Get(dest)
+		hd := make(http.Header,0)
+		for _, header := range route.Headers {
+			h := strings.Split(header, ": ")
+			hd.Add(h[0],h[1])
+		}
+		req ,err := http.NewRequest(route.Method,dest,bytes.NewReader([]byte(route.Payload)))
+		if err != nil {
+			context.JSON(500,err.Error())
+			return
+		}
+		resp, err := client.Do(req)
 		if err != nil {
 			context.JSON(500,err.Error())
 			return
@@ -77,20 +90,6 @@ func handle(context *gin.Context) {
 		if route.Body != "" && route.Body != string(body) {
 			context.JSON(500,fmt.Sprintf("%s: real body %s not equal expect body %s",dest,string(body),route.Body))
 			return
-		}
-		for _, header := range route.Headers {
-			h := strings.Split(header, ": ")
-			key := h[0]
-			value := h[1]
-			v, ok := resp.Header[key]
-			if !ok {
-				context.JSON(500,fmt.Sprintf("%s: not found expected header %s",dest,key))
-				return
-			}
-            if v[0] != value {
-				context.JSON(500,fmt.Sprintf("%s: real %s header is %s not equal expect %s",dest,key,v[0],value))
-				return
-			}
 		}
 	}
 
