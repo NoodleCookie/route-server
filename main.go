@@ -69,6 +69,7 @@ func handle(context *gin.Context) {
 			hd.Add(h[0],h[1])
 		}
 		req ,err := http.NewRequest(route.Method,dest,bytes.NewReader([]byte(route.Payload)))
+		req.Header = hd
 		if err != nil {
 			context.JSON(500,err.Error())
 			return
