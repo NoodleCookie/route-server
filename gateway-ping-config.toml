@@ -1,0 +1,14 @@
+[[route]]
+host = "http://api-gateway:8080"
+path = "/config/v1/ping"
+body="pong"
+
+[[route]]
+host = "http://api-gateway:8080"
+path = "/node/v1/ping"
+body="pong"
+
+[[route]]
+host = "http://api-gateway:8080"
+path = "/storage/v1/ping"
+body="pong"

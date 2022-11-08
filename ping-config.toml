@@ -1,0 +1,14 @@
+[[route]]
+host = "http://config-service"
+path = "/v1/ping"
+body="pong"
+
+[[route]]
+host = "http://node-service"
+path = "/v1/ping"
+body="pong"
+
+[[route]]
+host = "http://storage-service"
+path = "/v1/ping"
+body="pong"

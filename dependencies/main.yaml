@@ -1,5 +1,5 @@
 -  request:
-      url: /ping
+      url: /v1/ping
    response: 
       status: 200
       body: pong
