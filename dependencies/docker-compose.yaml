@@ -35,18 +35,6 @@ services:
       LOCATION: 0.0.0.0
       STUBS_PORT: 80
       WITH_ARGS: "--debug --watch"
-
-  h4:
-    user: root
-    image: azagniotov/stubby4j:latest-jre11
-    hostname: ${HOST_4}
-    volumes:
-      - "./main.yaml:/home/stubby4j/data/main.yaml"
-    environment:
-      YAML_CONFIG: main.yaml
-      LOCATION: 0.0.0.0
-      STUBS_PORT: 80
-      WITH_ARGS: "--debug --watch"
       
 networks:
   default:

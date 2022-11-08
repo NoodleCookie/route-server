@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  api-gateway:
+    user: root
+    image: nginx:latest
+    hostname: ${HOST_1}
+    # volumes:
+    #   - "./main.yaml:/home/stubby4j/data/main.yaml"
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+   
